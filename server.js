@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const PORT = 3001;
 
+
 const fs = require('fs');
 const path = require('path');
 
@@ -18,3 +19,7 @@ app.get("/public/notes", (req, res) => {
     console.log("GET request received")
 });
 
+// Listener to connect to port
+app.listen(PORT, () =>
+console.log(`App listening att http://localhost:${PORT} 🚀`)
+);
