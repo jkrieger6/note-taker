@@ -13,5 +13,8 @@ app.get("/", (req, res) =>
     res.sendFile(path.join(__dirname, "/public/index.html")));
 
 // GET request to retrieve notes
-
+app.get("/public/notes", (req, res) => {
+    res.sendFile(path.join(__dirname, "public/notes.html"))
+    console.log("GET request received")
+});
 
