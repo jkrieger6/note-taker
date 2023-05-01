@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const PORT = process.env.PORT || 3001;
+const PORT = 3001;
 
 
 const fs = require('fs');
@@ -63,7 +63,33 @@ app.post("/api/notes", (req, res) => {
 }
 });
 
+// DELETE method to delete notes that have been aded(bonus points)
+app.delete("/api/notes/:id", (req, res) => {
+    const id = req.params.id;
+    fs.readFile("./db/db.json", (err, data) => {
+        if (err) {
+            console.error(err);
+        } else {
+            const parsedNotes = JSON.parse(data);
+            const newNotes = parsedNotes.filter((note) => note.id !== id);
+            fs.writeFile("./db/db.json",
+            JSON.stringify(newNotes, null, 4),
+            (writeErr) =>
+            writeErr
+            ? console.error(writeErr)
+            : console.info("Successfully deleted note!")
+            );
+        }
+    });
+    const response = {
+        status: "success",
+        body: id,
+    };
+    console.log(response);
+    res.json(response);
+});
+
 // Listener to connect to port
 app.listen(PORT, () =>
-console.log(`App listening att http://localhost:${PORT} 🚀`)
+console.log(`App listening at http://localhost:${PORT} 🚀`)
 );
