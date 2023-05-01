@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const PORT = 3001;
-
+const uuid = require('uuid');
 
 const fs = require('fs');
 const path = require('path');
@@ -10,7 +10,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
 
-// Listener to connect to server and retrieve notes
+// GET route to connect to server and retrieve notes
 app.get("/notes", (req, res) => {
     res.sendFile(path.join(__dirname, "/public/notes.html"))
 });
@@ -20,12 +20,18 @@ app.get("*", (req, res) => {
 });
 
 
-// API routes
-app.get('/api/notes', (req, res) => {
-    const notes =JSON.parse(fs.readFileSync('./db/db.json', 'utf-8'));
-    res.json(notes);
-})
-// POST request to add notes
+// GET route to retrieve notes from db.json file and return all saved notes as JSON
+app.get("/api/notes", (req, res) => {
+    console.info(`${req.method} request received for notes`);
+    fs.readFile("./db/db.json", (err, data) => {
+        if (err) {
+            console.error(err);
+        } else {
+            res.json(JSON.parse(data));
+        }
+    });
+});
+// POST request to add notes and give them a unique id using uuid node package
 app.post("/api/notes", (req, res) => {
     console.info(`${req.method} request received to add a note`);
     const { title, text } = req.body;
