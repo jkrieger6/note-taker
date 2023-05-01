@@ -34,11 +34,13 @@ app.get("/api/notes", (req, res) => {
 // POST request to add notes and give them a unique id using uuid node package
 app.post("/api/notes", (req, res) => {
     console.info(`${req.method} request received to add a note`);
+    console.log(req.body);
     const { title, text } = req.body;
-    if (title && text) {
+    if (req.body) {
         const newNote = {
             title,
             text,
+            id: uuid.v4(),
         };
         // Convert data into a string so it can be saved
         const reviewString =JSON.stringify(newNote);
