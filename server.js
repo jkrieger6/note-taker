@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const PORT = process.env.PORT || 3001;
-const uuid = require('/develop/helpers/uuid.js');
+// const uuid = require('/develop/helpers/uuid.js');
 
 
 const fs = require('fs');
@@ -11,19 +11,19 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
 
-const noteBtn = document.getElementById("noteBtn");
-noteBtn.addEventListener("click", (e) => {
-    e.preventDefault();
-    window.location.href = "/notes";
-});
+// const noteBtn = document.getElementById("noteBtn");
+// noteBtn.addEventListener("click", (e) => {
+//     e.preventDefault();
+//     window.location.href = "/notes";
+// });
 
 // GET route to connect to server and retrieve notes
 app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "/develop/public/index.html"))
+    res.sendFile(path.join(__dirname, "develop/public/index.html"))
 });
 
 app.get("/notes", (req, res) => {
-    res.sendFile(path.join(__dirname, "/develop/public/notes.html"))
+    res.json(notes);
 });
 
 // GET route to retrieve notes from db.json file and return all saved notes as JSON
@@ -39,8 +39,8 @@ app.get("/api/notes", (req, res) => {
 });
 // POST request to add notes and give them a unique id using uuid node package
 app.post("/api/notes", (req, res) => {
+    // Logs that the POST request was received
     console.info(`${req.method} request received to add a note`);
-    console.log(req.body);
     const { title, text } = req.body;
     if (req.body) {
         const newNote = {
@@ -48,36 +48,37 @@ app.post("/api/notes", (req, res) => {
             text,
             id: uuid.v4(),
         };
-        // Convert data into a string so it can be saved
-        const reviewString =JSON.stringify(newNote);
-        // Add string to a file
-        fs.readFile("./db/db.json", (err, data) => {
-            if (err) {
-                console.error(err);
-            } else {
-                const parsedNotes = JSON.parse(data);
-                parsedNotes.push(newNote);
-                fs.writeFile(".db/db.json",
-                JSON.stringify(parsedNotes, null,),
-                (writeErr) =>
-                writeErr
-                ? console.error(writeErr)
-                : console.info("Successfully updated notes!")
-                );
-            }
-    });
-    const response = {
-        status: "success",
-        body: newNote,
-    };
-    console.log(response);
-    res.json(response);
-} else {
-    res.json("Error in creating note");
-}
-});
 
-// DELETE method to delete notes that have been aded(bonus points)
+        const response = {
+            status: "success",
+            body: newNote,
+        };
+        console.log(response);
+        res.status(201).json(response);
+    } else {
+        res.status(500).json("Error in posting note");
+    }
+});
+        // Convert data into a string so it can be saved
+        // const reviewString =JSON.stringify(newNote);
+        // Add string to a file
+    //     fs.readFile("./db/db.json", (err, data) => {
+    //         if (err) {
+    //             console.error(err);
+    //         } else {
+    //             const parsedNotes = JSON.parse(data);
+    //             parsedNotes.push(newNote);
+    //             fs.writeFile(".db/db.json",
+    //             JSON.stringify(parsedNotes, null,),
+    //             (writeErr) =>
+    //             writeErr
+    //             ? console.error(writeErr)
+    //             : console.info("Successfully updated notes!")
+    //             );
+    //         }
+    // });
+
+// DELETE request to delete notes that have been aded(bonus points)
 app.delete("/api/notes/:id", (req, res) => {
     const id = req.params.id;
     fs.readFile("./db/db.json", (err, data) => {
