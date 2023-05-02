@@ -12,6 +12,13 @@ if (window.location.pathname === '/notes') {
   noteList = document.querySelectorAll('.list-container .list-group');
 }
 
+// When the user clicks the note button from the index page, they are taken to the notes page
+const noteBtn = document.getElementById('noteBtn');
+noteBtn.addEventListener('click', (e) => {
+  e.preventDefault();
+  window.location.href = '/';
+});
+
 // Show an element
 const show = (elem) => {
   elem.style.display = 'inline';
