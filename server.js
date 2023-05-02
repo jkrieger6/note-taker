@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const PORT = process.env.PORT || 3001;
-const uuid = require('/public/assets/helpers/uuid.js');
+const uuid = require('/develop/helpers/uuid.js');
 
 
 const fs = require('fs');
@@ -18,14 +18,13 @@ noteBtn.addEventListener("click", (e) => {
 });
 
 // GET route to connect to server and retrieve notes
-app.get("/notes", (req, res) => {
-    res.sendFile(path.join(__dirname, "/public/notes.html"))
-});
-
 app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "public/index.html"))
+    res.sendFile(path.join(__dirname, "/develop/public/index.html"))
 });
 
+app.get("/notes", (req, res) => {
+    res.sendFile(path.join(__dirname, "/develop/public/notes.html"))
+});
 
 // GET route to retrieve notes from db.json file and return all saved notes as JSON
 app.get("/api/notes", (req, res) => {
