@@ -12,8 +12,8 @@ if (window.location.pathname === '/notes') {
   noteList = document.querySelectorAll('.list-container .list-group');
 }
 
-// When the user clicks the note button from the index page, they are taken to the notes page
-const noteBtn = document.getElementById('noteBtn');
+// When the user clicks the get started button from the index page, they are taken to the notes page
+const noteBtn = document.getElementById('btn btn-primary btn-lg mt-4');
 noteBtn.addEventListener('click', (e) => {
   e.preventDefault();
   window.location.href = '/';
