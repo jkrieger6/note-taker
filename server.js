@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const PORT = process.env.PORT || 3001;
-// const uuid = require('/develop/helpers/uuid.js');
+const uuid = require('/develop/helpers/uuid.js');
 
 
 const fs = require('fs');
@@ -11,18 +11,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
 
-// const noteBtn = document.getElementById("noteBtn");
-// noteBtn.addEventListener("click", (e) => {
-//     e.preventDefault();
-//     window.location.href = "/notes";
-// });
-
 // GET route to connect to server and retrieve notes
 app.get("*", (req, res) => {
     res.sendFile(path.join(__dirname, "develop/public/index.html"))
 });
 
-app.get("/notes", (req, res) => {
+app.get("/api/notes", (req, res) => {
     res.json(notes);
 });
 
@@ -48,7 +42,7 @@ app.post("/api/notes", (req, res) => {
             text,
             id: uuid.v4(),
         };
-
+        notes.push(newNote);
         const response = {
             status: "success",
             body: newNote,
@@ -88,7 +82,7 @@ app.delete("/api/notes/:id", (req, res) => {
             const parsedNotes = JSON.parse(data);
             const newNotes = parsedNotes.filter((note) => note.id !== id);
             fs.writeFile("./db/db.json",
-            JSON.stringify(newNotes, null, 4),
+            JSON.stringify(newNotes),
             (writeErr) =>
             writeErr
             ? console.error(writeErr)
