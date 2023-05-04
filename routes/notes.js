@@ -1,18 +1,18 @@
-const express = require("express");
-const app = express();
+const notes = require("express").Router();
+const uuid = require("/helpers/uuid");
 const path = require("path");
 
 // Sets up the Express app to handle data parsing
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
+notes.use(express.urlencoded({ extended: true }));
+notes.use(express.json());
 
 // GET route for retrieving all the notes from db.json file
-app.get("/notes", (req, res) => {
+notes.get("/notes", (req, res) => {
     res.readFromFile("./develop/db.json").then((data) => res.json(JSON.parse(data)));
 });
 
 // POST route for adding notes and giving them a unique id using uuid node package
-app.post("/notes", (req, res) => {
+notes.post("/notes", (req, res) => {
     // Logs that the POST request was received
     console.info(`${req.method} request received to add a note`);
     const { title, text } = req.body;
