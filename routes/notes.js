@@ -1,14 +1,34 @@
 const notes = require("express").Router();
-const uuid = require("/helpers/uuid");
-const path = require("path");
+const uuid = require("uuid");
+const util = require('util');
+const fs = require('fs');
+const writeToFile = (destination, content) =>
+  fs.writeFile(destination, JSON.stringify(content, null, 4), (err) =>
+    err ? console.error(err) : console.info(`\nData written to ${destination}`)
+  );
 
-// Sets up the Express app to handle data parsing
-notes.use(express.urlencoded({ extended: true }));
-notes.use(express.json());
+const readAndAppend = (content, file) => {
+    fs.readFile(file, 'utf8', (err, data) => {
+      if (err) {
+        console.error(err);
+      } else {
+        const parsedData = JSON.parse(data);
+        parsedData.push(content);
+        writeToFile(file, parsedData);
+      }
+    });
+  };
+
+  const readFromFile = util.promisify(fs.readFile);
+
+  
+
+
+
 
 // GET route for retrieving all the notes from db.json file
 notes.get("/notes", (req, res) => {
-    res.readFromFile("./develop/db.json").then((data) => res.json(JSON.parse(data)));
+    readFromFile("./develop/db/db.json").then((data) => res.json(JSON.parse(data)));
 });
 
 // POST route for adding notes and giving them a unique id using uuid node package
@@ -23,15 +43,43 @@ notes.post("/notes", (req, res) => {
             id: uuid.v4(),
         };
 
-        readAndAppend(newNote, "./develop/db.json");
+        readAndAppend(newNote, "./develop/db/db.json");
 
         const response = {
             status: "success",
             body: newNote,
         };
         console.log(response);
-        res.status(201).json(response);
+        res.status(201).json(newNote);
     } else {
         res.status(500).json("Error in posting note");
     }
 });
+
+// DELETE request to delete notes that have been aded(bonus points)
+notes.delete("/notes/:id", (req, res) => {
+    const id = req.params.id;
+    fs.readFile("./develop/db/db.json", (err, data) => {
+        if (err) {
+            console.error(err);
+        } else {
+            const parsedNotes = JSON.parse(data);
+            const newNotes = parsedNotes.filter((note) => note.id !== id);
+            fs.writeFile("./develop/db/db.json",
+            JSON.stringify(newNotes),
+            (writeErr) =>
+            writeErr
+            ? console.error(writeErr)
+            : console.info("Successfully deleted note!")
+            );
+        }
+    });
+    const response = {
+        status: "success",
+        body: id,
+    };
+    console.log(response);
+    res.json(response);
+});
+
+  module.exports = notes;
