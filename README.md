@@ -8,21 +8,43 @@ A note taker that can be used to write and save notes. This application will use
 * Website live at following url:
 
 ## Visuals
-* Example of 
+* When taken to the landing page the user will be presented with this page:
+![Landing Page](./develop/public/assets/images/Note-taker.jpeg)
+* When the user clicks on the "Get Started" button they will be taken to the notes page:
+![Notes Page](./develop/public/assets/images/noteLanding.jpeg)
+* When the user clicks on the plus icon in the top right corner they will be able to enter a new note:
+![New Note](./develop/public/assets/images/addNote.jpeg)
+* When the user clicks on the save icon in the top right corner they will be able to save the note:
+![Save Note](./develop/public/assets/images/saveBtn.jpeg)
+* When the user clicks on the trash can icon next to the note they will be able to delete the note:
+![Delete Note](./develop/public/assets/images/deleteNote.jpeg)
+* When the user clicks on the note they will be able to view the note:
+![View Note](./develop/public/assets/images/noteExpand.jpeg)
+
 ## Installation
-* Node version 16 inquierer package 8.2.4
-* To instal inquerier package use the following commands 
-```npm init
+* Node version 16 is required to run this application
+* To install Nodes required packages use the following commands 
+```
+npm init -y
+npm install express
+npm install uuid
 ```
 * Clone repository using GitHub
 ``` 
-git clone 
+git clone https://github.com/jkrieger6/note-taker.git
 ```
 * Made using the latest versions of Visual Studio Code
 * Made with the latest version of GitHub
 * Made using the latest version of Node.js
 * Made using the latest version of Express.js
 * Made using the latest version of Insomnia Core
+
+## Usage
+* To use this application, clone the repository to your local machine and run the following command(s) in your terminal:
+```
+npm start or node server.js
+```
+
 
 ## License
 * This application is covered under the [MIT](https://choosealicense.com/licenses/mit/) license
