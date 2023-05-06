@@ -25,11 +25,6 @@ const readAndAppend = (content, file) => {
 // Function to read from db.json file
   const readFromFile = util.promisify(fs.readFile);
 
-  
-
-
-
-
 // GET route for retrieving all the notes from db.json file
 notes.get("/notes", (req, res) => {
     readFromFile("./develop/db/db.json").then((data) => res.json(JSON.parse(data)));

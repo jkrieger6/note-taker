@@ -1,16 +1,1 @@
-[
-    {
-        "title": "Test Title",
-        "text": "Test text"
-    },
-    {
-        "title": "Shopping",
-        "text": "Get groceries for the week",
-        "id": "5e263e70-f2d9-454f-a209-2dc62f69dd30"
-    },
-    {
-        "title": "Gas",
-        "text": "Fill the car up with gas",
-        "id": "1241944d-cd59-4639-8fea-e50858033444"
-    }
-]
+[{"title":"Grocery","text":"Get groceries for the week","id":"7857ef85-a54b-44cd-872a-178080acc81b"},{"title":"Festival","text":"Go and enjoy the food festival on Saturday night and eat more than you should.","id":"ab0dd8da-2f45-44a5-aebf-50e9e5e74d92"}]
