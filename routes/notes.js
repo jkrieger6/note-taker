@@ -2,11 +2,14 @@ const notes = require("express").Router();
 const uuid = require("uuid");
 const util = require('util');
 const fs = require('fs');
+
+// Function to write notes to db.json file
 const writeToFile = (destination, content) =>
   fs.writeFile(destination, JSON.stringify(content, null, 4), (err) =>
     err ? console.error(err) : console.info(`\nData written to ${destination}`)
   );
 
+// Function to read and append notes to db.json file
 const readAndAppend = (content, file) => {
     fs.readFile(file, 'utf8', (err, data) => {
       if (err) {
@@ -19,6 +22,7 @@ const readAndAppend = (content, file) => {
     });
   };
 
+// Function to read from db.json file
   const readFromFile = util.promisify(fs.readFile);
 
   
@@ -56,7 +60,7 @@ notes.post("/notes", (req, res) => {
     }
 });
 
-// DELETE request to delete notes that have been aded(bonus points)
+// DELETE request to delete notes that have been added
 notes.delete("/notes/:id", (req, res) => {
     const id = req.params.id;
     fs.readFile("./develop/db/db.json", (err, data) => {
