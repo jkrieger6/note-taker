@@ -5,7 +5,7 @@ A note taker that can be used to write and save notes. This application will use
 * This application will allow users to create and save notes.
 * This application will allow users to view previously saved notes.
 * This application will allow users to delete previously saved notes.
-* Website live at following url:
+* Website live at following url: https://peaceful-river-29379.herokuapp.com/
 
 ## Visuals
 * When taken to the landing page the user will be presented with this page:
